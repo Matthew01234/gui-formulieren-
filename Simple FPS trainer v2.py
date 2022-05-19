@@ -4,6 +4,7 @@ from telnetlib import XASCII
 from threading import Timer
 import tkinter
 import random
+from tkinter import Entry, ttk
 from tkinter.messagebox import askyesno
 window = tkinter.Tk()
 
@@ -16,8 +17,8 @@ tijd = 20
 points = 0
 
 def start():
- print ('welcome')
- fpstrainer()
+    print ('welcome')
+    fpstrainer()
 
 
 def update(arg=''):
@@ -32,6 +33,15 @@ def update(arg=''):
     window.update()
     box2.configure(text='Points: '+ str(points))
     klickboxen()
+
+def updatetijd(*args):
+    global tijd
+    tijd = int(text.get())
+    box1.configure(text='Time Remaining: '+ str(tijd))
+    
+
+
+
 
 def timer():
     global tijd
@@ -78,6 +88,7 @@ def klickboxen():
 def fpstrainer():
     timer()
     button.destroy()
+    startentry.destroy()
     klickboxen()
    
         
@@ -92,6 +103,10 @@ box2.pack(pady=2)
 
 
 button = tkinter.Button(window,width=35, height=10,command=start)
+text = tkinter.StringVar(value=tijd)
+text.trace('w',updatetijd)
+startentry = ttk.Entry(window, textvariable=text)
+startentry.pack()
 button.pack()
 button.configure(text='start')
 
